@@ -1,0 +1,31 @@
+name: dependent jobs
+
+on: push
+
+jobs:
+  job_on_ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - run: date
+  job_on_windows:
+    name: A windows job
+    runs-on: windows-latest
+    steps:
+      - name: First step in windows job
+        run: date
+  job_on_macos:
+    needs: [job_on_ubuntu, job_on_windows]
+    name: A job that runs on mac after first two jobs
+    runs-on: macos-latest
+    steps:
+    - run: pwd
+    - name: new step
+      run: ls
+    - name: next step
+      run: pwd
+  Final_job:
+    needs: [job_on_macos]
+    name: A final job
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo Hello World!
