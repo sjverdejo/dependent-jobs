@@ -22,7 +22,7 @@ jobs:
     - name: new step
       run: ls
     - name: next step
-      run: pwd
+      run: env
   Final_job:
     needs: [job_on_macos]
     name: A final job
